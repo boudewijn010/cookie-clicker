@@ -9,6 +9,7 @@ body {
   justify-content: center; /* Naar links uitlijnen */
   height: 100vh;
   width: 300px;
+  padding-left: 50px;
 }
 
 #cookie img {
