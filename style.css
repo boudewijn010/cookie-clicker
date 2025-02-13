@@ -1,9 +1,22 @@
 body {
-  position: absolute;
+background-color: grey;
 }
 
 #cookie {
-  position: relative;
-  left: 50px;
-  top: 50%;
+  display: flex;
+  align-items: center; /* Verticaal centreren */
+  flex-direction: column;
+  justify-content: center; /* Naar links uitlijnen */
+  height: 100vh;
+  width: 300px;
+}
+
+#cookie img {
+  max-width: 100%; /* Optioneel: voorkomt dat de afbeelding te groot wordt */
+  height: auto;
+}
+
+#cookies {
+ display: flex;
+  align-content: center;
 }
