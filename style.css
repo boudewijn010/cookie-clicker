@@ -14,9 +14,10 @@ background-color: grey;
 #cookie img {
   max-width: 100%; /* Optioneel: voorkomt dat de afbeelding te groot wordt */
   height: auto;
+    cursor:pointer ;
 }
 
-#cookies {
+#score {
  display: flex;
   align-content: center;
 }
