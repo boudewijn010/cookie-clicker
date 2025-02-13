@@ -1,5 +1,5 @@
 body {
-background-color: grey;
+  background-color: rgb(215, 215, 215);
 }
 
 #cookie {
@@ -14,10 +14,10 @@ background-color: grey;
 #cookie img {
   max-width: 100%; /* Optioneel: voorkomt dat de afbeelding te groot wordt */
   height: auto;
-    cursor:pointer ;
+  cursor: pointer;
 }
 
 #score {
- display: flex;
+  display: flex;
   align-content: center;
 }
