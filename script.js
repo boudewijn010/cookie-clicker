@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   class Game {
     constructor() {
-      this.score = 0;
+      this.score = 10000000000; // later aanpassen naar 0
       this.scoreElement = document.getElementById("score");
       this.updateScore();
     }
@@ -86,24 +86,62 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateButtonText() {
-      this.button.textContent = `oma (kost: ${this.cost})`;
+      this.button.textContent = `Koop upgrade (kost: ${this.cost})`;
+    }
+
+    upgrade(increase, cost, button) {
+      if (this.game.spendPoints(cost)) {
+        this.totalCps += increase;
+        console.log(`Upgrade gekocht: +${increase} cps voor ${cost} koekjes.`);
+        const newCost = Math.ceil(cost * 1.2); // Increase cost by 20%
+        button.textContent = `Koop upgrade (kost: ${newCost})`;
+        button.dataset.cost = newCost; // Store the new cost in a data attribute
+      } else {
+        alert("Niet genoeg punten voor deze upgrade!");
+      }
     }
   }
 
   const game = new Game();
   new ImageClicker("cookie", 1, game);
 
-  const autoClicker = new AutoClicker(game, 1, 15, "buyAutoClicker");
-  const buyAutoClickerButton = document.getElementById("buyAutoClicker");
-  const stopAutoClickerButton = document.getElementById("stopAutoClicker");
+  const autoClicker = new AutoClicker(game, 0.3, 15, "buyAutoClicker");
+  document
+    .getElementById("buyAutoClicker")
+    ?.addEventListener("click", () => autoClicker.purchase());
+  document
+    .getElementById("stopAutoClicker")
+    ?.addEventListener("click", () => autoClicker.stop());
 
-  if (buyAutoClickerButton) {
-    buyAutoClickerButton.addEventListener("click", () =>
-      autoClicker.purchase()
-    );
-  }
+  const upgrades = [
+    { increase: 100, cost: 5000 },
+    { increase: 500, cost: 20000 },
+    { increase: 1000, cost: 50000 },
+    { increase: 5000, cost: 100000 },
+    { increase: 10000, cost: 500000 },
+    { increase: 50000, cost: 1000000 },
+    { increase: 100000, cost: 5000000 },
+    { increase: 500000, cost: 10000000 },
+  ];
 
-  if (stopAutoClickerButton) {
-    stopAutoClickerButton.addEventListener("click", () => autoClicker.stop());
+  upgrades.forEach((upgrade, index) => {
+    const button = document.getElementById(`upgrade${index + 1}`);
+    if (button) {
+      button.dataset.cost = upgrade.cost; // Initialize the cost in a data attribute
+      button.addEventListener("click", () => {
+        const currentCost = parseInt(button.dataset.cost, 10);
+        autoClicker.upgrade(upgrade.increase, currentCost, button);
+      });
+    }
+  });
+
+  const upgradeAutoClickerButton =
+    document.getElementById("upgradeAutoClicker");
+  if (upgradeAutoClickerButton) {
+    upgradeAutoClickerButton.dataset.cost = 1000; // Initialize the cost in a data attribute
+    upgradeAutoClickerButton.addEventListener("click", () => {
+      const currentCost = parseInt(upgradeAutoClickerButton.dataset.cost, 10);
+      autoClicker.upgrade(100, currentCost, upgradeAutoClickerButton);
+    });
   }
 });
