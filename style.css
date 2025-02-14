@@ -4,16 +4,16 @@ body {
 
 #cookie {
   display: flex;
-  align-items: center; /* Verticaal centreren */
+  align-items: center;
   flex-direction: column;
-  justify-content: center; /* Naar links uitlijnen */
+  justify-content: center;
   height: 100vh;
   width: 300px;
   padding-left: 50px;
 }
 
 #cookie img {
-  max-width: 100%; /* Optioneel: voorkomt dat de afbeelding te groot wordt */
+  max-width: 100%;
   height: auto;
   cursor: pointer;
 }
@@ -21,4 +21,6 @@ body {
 #score {
   display: flex;
   align-content: center;
+  font-size: 24px; /* Ensure the score is visible */
+  margin-bottom: 20px; /* Add some space below the score */
 }
