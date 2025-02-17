@@ -86,15 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateButtonText() {
-      this.button.textContent = `Koop upgrade (kost: ${this.cost})`;
+      this.button.textContent = `koop oma (kost: ${this.cost})`;
     }
 
-    upgrade(increase, cost, button) {
+    upgrade(increase, cost, button, originalText) {
       if (this.game.spendPoints(cost)) {
         this.totalCps += increase;
         console.log(`Upgrade gekocht: +${increase} cps voor ${cost} koekjes.`);
         const newCost = Math.ceil(cost * 1.2); // Increase cost by 20%
-        button.textContent = `Koop upgrade (kost: ${newCost})`;
+        button.textContent = `${originalText} (kost: ${newCost})`;
         button.dataset.cost = newCost; // Store the new cost in a data attribute
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
@@ -114,14 +114,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ?.addEventListener("click", () => autoClicker.stop());
 
   const upgrades = [
-    { increase: 100, cost: 5000 },
-    { increase: 500, cost: 20000 },
-    { increase: 1000, cost: 50000 },
-    { increase: 5000, cost: 100000 },
-    { increase: 10000, cost: 500000 },
-    { increase: 50000, cost: 1000000 },
-    { increase: 100000, cost: 5000000 },
-    { increase: 500000, cost: 10000000 },
+    { increase: 100, cost: 5000, text: "koop bakvormpjes" },
+    { increase: 500, cost: 20000, text: "koop extra oven" },
+    { increase: 1000, cost: 50000, text: "koop bakkerij" },
+    { increase: 5000, cost: 100000, text: "koop personeel" },
+    { increase: 10000, cost: 500000, text: "koop fabriek" },
+    { increase: 50000, cost: 1000000, text: "koop gordon ramsay" },
   ];
 
   upgrades.forEach((upgrade, index) => {
@@ -130,7 +128,12 @@ document.addEventListener("DOMContentLoaded", () => {
       button.dataset.cost = upgrade.cost; // Initialize the cost in a data attribute
       button.addEventListener("click", () => {
         const currentCost = parseInt(button.dataset.cost, 10);
-        autoClicker.upgrade(upgrade.increase, currentCost, button);
+        autoClicker.upgrade(
+          upgrade.increase,
+          currentCost,
+          button,
+          upgrade.text
+        );
       });
     }
   });
@@ -141,7 +144,12 @@ document.addEventListener("DOMContentLoaded", () => {
     upgradeAutoClickerButton.dataset.cost = 1000; // Initialize the cost in a data attribute
     upgradeAutoClickerButton.addEventListener("click", () => {
       const currentCost = parseInt(upgradeAutoClickerButton.dataset.cost, 10);
-      autoClicker.upgrade(100, currentCost, upgradeAutoClickerButton);
+      autoClicker.upgrade(
+        100,
+        currentCost,
+        upgradeAutoClickerButton,
+        "koop beter deeg"
+      );
     });
   }
 });
