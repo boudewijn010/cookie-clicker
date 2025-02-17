@@ -1,5 +1,9 @@
 body {
+<<<<<<< Updated upstream
   background-color: rgb(215, 215, 215);
+=======
+  background-color: grey;
+>>>>>>> Stashed changes
 }
 
 #cookie {
@@ -15,7 +19,11 @@ body {
 #cookie img {
   max-width: 100%;
   height: auto;
+<<<<<<< Updated upstream
   cursor: pointer;
+=======
+  cursor:pointer ;
+>>>>>>> Stashed changes
 }
 
 #score {
