@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateScore() {
-      this.scoreElement.textContent = `Score: ${Math.floor(this.score)}`;
+      this.scoreElement.textContent = `${Math.floor(this.score)} koekjes`;
     }
 
     canAfford(cost) {
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateButtonText() {
-      this.button.textContent = `koop oma (koekjes: ${this.cost})`;
+      this.button.textContent = `koop oma (${this.cost} koekjes)`;
     }
 
     upgrade(increase, cost, button, originalText) {
