@@ -1,9 +1,5 @@
 body {
-<<<<<<< Updated upstream
   background-color: rgb(215, 215, 215);
-=======
-  background-color: grey;
->>>>>>> Stashed changes
 }
 
 #cookie {
@@ -19,16 +15,12 @@ body {
 #cookie img {
   max-width: 100%;
   height: auto;
-<<<<<<< Updated upstream
   cursor: pointer;
-=======
-  cursor:pointer ;
->>>>>>> Stashed changes
 }
 
 #score {
   display: flex;
   align-content: center;
-  font-size: 24px; /* Ensure the score is visible */
-  margin-bottom: 20px; /* Add some space below the score */
+  font-size: 24px;
+  margin-bottom: 20px;
 }
