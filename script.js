@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateScore() {
-      this.scoreElement.textContent = `${Math.floor(this.score)} koekjes`;
+      this.scoreElement.textContent = `Score: ${Math.floor(this.score)}`;
     }
 
     canAfford(cost) {
@@ -86,16 +86,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateButtonText() {
-      this.button.textContent = `koop oma (${this.cost} koekjes)`;
+      this.button.textContent = `koop oma (koekjes: ${this.cost})`;
     }
 
     upgrade(increase, cost, button, originalText) {
       if (this.game.spendPoints(cost)) {
         this.totalCps += increase;
         console.log(`Upgrade gekocht: +${increase} cps voor ${cost} koekjes.`);
-        const newCost = Math.ceil(cost * 1.2); // Increase cost by 20%
+        const newCost = Math.ceil(cost * 1.2);
         button.textContent = `${originalText} (${newCost} koekjes)`;
-        button.dataset.cost = newCost; // Store the new cost in a data attribute
+        button.dataset.cost = newCost;
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
       }
