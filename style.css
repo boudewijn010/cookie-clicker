@@ -38,6 +38,22 @@ body {
   gap: 10px;
 }
 
+.upgrade-counts {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+}
+
+.upgrade-counts ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.upgrade-counts li {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
 button {
   background-color: transparent;
   border: 0.125em solid #1a1a1a;

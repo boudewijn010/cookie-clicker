@@ -53,13 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
       this.updateButtonText();
     }
 
-    purchase() {
+    purchase(countElement) {
       if (this.game.spendPoints(this.cost)) {
         this.totalCps += this.cps;
         this.start();
         this.cost = Math.ceil(this.cost * 1.25);
         this.updateButtonText();
         console.log(`Nieuwe kosten: ${this.cost}`);
+        const currentCount = parseInt(
+          countElement.textContent.split(": ")[1],
+          10
+        );
+        countElement.textContent = `Oma: ${currentCount + 1}`;
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
       }
@@ -89,13 +94,20 @@ document.addEventListener("DOMContentLoaded", () => {
       this.button.textContent = `koop oma (koekjes: ${this.cost})`;
     }
 
-    upgrade(increase, cost, button, originalText) {
+    upgrade(increase, cost, button, originalText, countElement) {
       if (this.game.spendPoints(cost)) {
         this.totalCps += increase;
         console.log(`Upgrade gekocht: +${increase} cps voor ${cost} koekjes.`);
         const newCost = Math.ceil(cost * 1.2);
         button.textContent = `${originalText} (${newCost} koekjes)`;
         button.dataset.cost = newCost;
+        const currentCount = parseInt(
+          countElement.textContent.split(": ")[1],
+          10
+        );
+        countElement.textContent = `${originalText.split(" ")[1]}: ${
+          currentCount + 1
+        }`;
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
       }
@@ -106,25 +118,59 @@ document.addEventListener("DOMContentLoaded", () => {
   new ImageClicker("cookie", 1, game);
 
   const autoClicker = new AutoClicker(game, 0.3, 15, "buyAutoClicker");
+  const countBuyAutoClicker = document.getElementById("count-buyAutoClicker");
   document
     .getElementById("buyAutoClicker")
-    ?.addEventListener("click", () => autoClicker.purchase());
+    ?.addEventListener("click", () =>
+      autoClicker.purchase(countBuyAutoClicker)
+    );
   document
     .getElementById("stopAutoClicker")
     ?.addEventListener("click", () => autoClicker.stop());
 
   const upgrades = [
-    { increase: 100, cost: 5000, text: "koop bakvormpjes" },
-    { increase: 500, cost: 20000, text: "koop extra oven" },
-    { increase: 1000, cost: 50000, text: "koop bakkerij" },
-    { increase: 5000, cost: 100000, text: "koop personeel" },
-    { increase: 10000, cost: 500000, text: "koop fabriek" },
-    { increase: 50000, cost: 1000000, text: "koop gordon ramsay" },
+    {
+      increase: 100,
+      cost: 5000,
+      text: "koop bakvormpjes",
+      countId: "count-upgrade1",
+    },
+    {
+      increase: 500,
+      cost: 20000,
+      text: "koop extra oven",
+      countId: "count-upgrade2",
+    },
+    {
+      increase: 1000,
+      cost: 50000,
+      text: "koop bakkerij",
+      countId: "count-upgrade3",
+    },
+    {
+      increase: 5000,
+      cost: 100000,
+      text: "koop personeel",
+      countId: "count-upgrade4",
+    },
+    {
+      increase: 10000,
+      cost: 500000,
+      text: "koop fabriek",
+      countId: "count-upgrade5",
+    },
+    {
+      increase: 50000,
+      cost: 1000000,
+      text: "koop gordon ramsay",
+      countId: "count-upgrade6",
+    },
   ];
 
   upgrades.forEach((upgrade, index) => {
     const button = document.getElementById(`upgrade${index + 1}`);
-    if (button) {
+    const countElement = document.getElementById(upgrade.countId);
+    if (button && countElement) {
       button.dataset.cost = upgrade.cost; // Initialize the cost in a data attribute
       button.addEventListener("click", () => {
         const currentCost = parseInt(button.dataset.cost, 10);
@@ -132,7 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
           upgrade.increase,
           currentCost,
           button,
-          upgrade.text
+          upgrade.text,
+          countElement
         );
       });
     }
@@ -140,7 +187,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const upgradeAutoClickerButton =
     document.getElementById("upgradeAutoClicker");
-  if (upgradeAutoClickerButton) {
+  const countUpgradeAutoClicker = document.getElementById(
+    "count-upgradeAutoClicker"
+  );
+  if (upgradeAutoClickerButton && countUpgradeAutoClicker) {
     upgradeAutoClickerButton.dataset.cost = 1000; // Initialize the cost in a data attribute
     upgradeAutoClickerButton.addEventListener("click", () => {
       const currentCost = parseInt(upgradeAutoClickerButton.dataset.cost, 10);
@@ -148,7 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
         100,
         currentCost,
         upgradeAutoClickerButton,
-        "koop beter deeg"
+        "koop beter deeg",
+        countUpgradeAutoClicker
       );
     });
   }
