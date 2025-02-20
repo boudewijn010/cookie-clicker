@@ -112,16 +112,43 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Niet genoeg punten voor deze upgrade!");
       }
     }
-    doubleEfficiency(cost, button, countElement) {
-      if (this.game.spendPoints(cost)) {
-        this.cps *= 2; // Verdubbel de CPS van Oma
-        this.totalCps *= 2; // Pas ook de actieve auto-clickers aan
-        console.log(`Oma's efficiency is verdubbeld! Nieuwe CPS: ${this.cps}`);
-        const newCost = Math.ceil(cost * 2);
-        button.textContent = `Verdubbel Oma's snelheid (${newCost} koekjes)`;
-        button.dataset.cost = newCost;
-        const currentCount = parseInt(countElement.textContent.split(": ")[1], 10);
-        countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
+  }
+
+  class EfficiencyUpgrade {
+    constructor(game, autoClicker, cost, buttonId, countElementId) {
+      this.game = game;
+      this.autoClicker = autoClicker;
+      this.cost = cost;
+      this.button = document.getElementById(buttonId);
+      this.countElement = document.getElementById(countElementId);
+      this.init();
+    }
+
+    init() {
+      if (this.button && this.countElement) {
+        this.button.dataset.cost = this.cost;
+        this.button.addEventListener("click", () => this.applyUpgrade());
+      }
+    }
+
+    applyUpgrade() {
+      const currentCost = parseInt(this.button.dataset.cost, 10);
+      if (this.game.spendPoints(currentCost)) {
+        this.autoClicker.cps *= 2;
+        this.autoClicker.totalCps =
+          this.autoClicker.cps *
+          parseInt(this.countElement.textContent.split(": ")[1], 10);
+        console.log(
+          `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}`
+        );
+        const newCost = Math.ceil(currentCost * 1.2); // Increase cost by 20%
+        this.button.textContent = `Verdubbel Oma's snelheid (${newCost} koekjes)`;
+        this.button.dataset.cost = newCost;
+        const currentCount = parseInt(
+          this.countElement.textContent.split(": ")[1],
+          10
+        );
+        this.countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
       } else {
         alert("Niet genoeg koekjes voor deze upgrade!");
       }
@@ -217,26 +244,12 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
-  const doubleOmaButton = document.getElementById("doubleOma");
-  const countDoubleOma = document.getElementById("count-doubleOma");
 
-  if (doubleOmaButton && countDoubleOma) {
-    doubleOmaButton.dataset.cost = 100000; // Startprijs
-    doubleOmaButton.addEventListener("click", () => {
-      const currentCost = parseInt(doubleOmaButton.dataset.cost, 10);
-      autoClicker.doubleEfficiency(currentCost, doubleOmaButton, countDoubleOma);
-    });
-  }
-
-  const doubleClickButton = document.getElementById("doubleClick");
-  const countDoubleClick = document.getElementById("count-doubleClick");
-
-  if (doubleClickButton && countDoubleClick) {
-    doubleClickButton.dataset.cost = 5000; // Startprijs
-    doubleClickButton.addEventListener("click", () => {
-      const currentCost = parseInt(doubleClickButton.dataset.cost, 10);
-      autoClicker.doubleEfficiency(currentCost, doubleOmaButton, countDoubleOma);
-    });
-  }
-
+  new EfficiencyUpgrade(
+    game,
+    autoClicker,
+    100000,
+    "doubleOma",
+    "count-doubleOma"
+  );
 });
