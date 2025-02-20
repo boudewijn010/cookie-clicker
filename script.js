@@ -112,6 +112,20 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Niet genoeg punten voor deze upgrade!");
       }
     }
+    doubleEfficiency(cost, button, countElement) {
+      if (this.game.spendPoints(cost)) {
+        this.cps *= 2; // Verdubbel de CPS van Oma
+        this.totalCps *= 2; // Pas ook de actieve auto-clickers aan
+        console.log(`Oma's efficiency is verdubbeld! Nieuwe CPS: ${this.cps}`);
+        const newCost = Math.ceil(cost * 2);
+        button.textContent = `Verdubbel Oma's snelheid (${newCost} koekjes)`;
+        button.dataset.cost = newCost;
+        const currentCount = parseInt(countElement.textContent.split(": ")[1], 10);
+        countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
+      } else {
+        alert("Niet genoeg koekjes voor deze upgrade!");
+      }
+    }
   }
 
   const game = new Game();
@@ -203,4 +217,26 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
+  const doubleOmaButton = document.getElementById("doubleOma");
+  const countDoubleOma = document.getElementById("count-doubleOma");
+
+  if (doubleOmaButton && countDoubleOma) {
+    doubleOmaButton.dataset.cost = 100000; // Startprijs
+    doubleOmaButton.addEventListener("click", () => {
+      const currentCost = parseInt(doubleOmaButton.dataset.cost, 10);
+      autoClicker.doubleEfficiency(currentCost, doubleOmaButton, countDoubleOma);
+    });
+  }
+
+  const doubleClickButton = document.getElementById("doubleClick");
+  const countDoubleClick = document.getElementById("count-doubleClick");
+
+  if (doubleClickButton && countDoubleClick) {
+    doubleClickButton.dataset.cost = 5000; // Startprijs
+    doubleClickButton.addEventListener("click", () => {
+      const currentCost = parseInt(doubleClickButton.dataset.cost, 10);
+      autoClicker.doubleEfficiency(currentCost, doubleOmaButton, countDoubleOma);
+    });
+  }
+
 });
