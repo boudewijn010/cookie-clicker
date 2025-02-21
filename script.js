@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(
           `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}`
         );
-        const newCost = Math.ceil(currentCost * 1.2); // Increase cost by 20%
+        const newCost = Math.ceil(currentCost * 1.2);
         this.button.textContent = `Verdubbel Oma's snelheid (${newCost} koekjes)`;
         this.button.dataset.cost = newCost;
         const currentCount = parseInt(
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById(`upgrade${index + 1}`);
     const countElement = document.getElementById(upgrade.countId);
     if (button && countElement) {
-      button.dataset.cost = upgrade.cost; // Initialize the cost in a data attribute
+      button.dataset.cost = upgrade.cost;
       button.addEventListener("click", () => {
         const currentCost = parseInt(button.dataset.cost, 10);
         autoClicker.upgrade(
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "count-upgradeAutoClicker"
   );
   if (upgradeAutoClickerButton && countUpgradeAutoClicker) {
-    upgradeAutoClickerButton.dataset.cost = 1000; // Initialize the cost in a data attribute
+    upgradeAutoClickerButton.dataset.cost = 1000;
     upgradeAutoClickerButton.addEventListener("click", () => {
       const currentCost = parseInt(upgradeAutoClickerButton.dataset.cost, 10);
       autoClicker.upgrade(
