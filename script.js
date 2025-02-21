@@ -245,8 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  //test
-
   new EfficiencyUpgrade(
     game,
     autoClicker,
