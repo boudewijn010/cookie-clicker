@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   class Game {
     constructor() {
-      this.score = 10000000000; // later aanpassen naar 0
+      this.score = 10000000000; //! wanneer klaar terugzetten naar 0
       this.scoreElement = document.getElementById("score");
       this.updateScore();
     }
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
         this.countElement.textContent = `Oma: ${currentCount + 1}`;
-        this.countElement.style.display = "inline"; // Ensure the span remains visible
+        this.countElement.style.display = "inline";
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
       }
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         countElement.textContent = `${originalText.split(" ")[1]}: ${
           currentCount + 1
         }`;
-        countElement.style.display = "inline"; // Ensure the span remains visible
+        countElement.style.display = "inline";
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
       }
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
         this.countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
-        this.countElement.style.display = "inline"; // Ensure the span remains visible
+        this.countElement.style.display = "inline";
       } else {
         alert("Niet genoeg koekjes voor deze upgrade!");
       }
