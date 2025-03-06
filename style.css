@@ -54,6 +54,12 @@ body {
   margin-bottom: 5px;
 }
 
+.upgrade-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 button {
   background-color: transparent;
   border: 0.125em solid #1a1a1a;
@@ -71,6 +77,13 @@ button {
   padding: 1em 2.3em;
   text-align: center;
   transition: all 300ms;
+  position: relative;
+}
+
+button span {
+  display: block;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 button:hover {

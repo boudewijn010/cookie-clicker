@@ -50,21 +50,21 @@ document.addEventListener("DOMContentLoaded", () => {
       this.cost = cost;
       this.isActive = false;
       this.button = document.getElementById(buttonId);
+      this.countElement = document.getElementById(`count-${buttonId}`);
       this.updateButtonText();
     }
 
-    purchase(countElement) {
+    purchase() {
       if (this.game.spendPoints(this.cost)) {
         this.totalCps += this.cps;
         this.start();
         this.cost = Math.ceil(this.cost * 1.25);
         this.updateButtonText();
         console.log(`Nieuwe kosten: ${this.cost}`);
-        const currentCount = parseInt(
-          countElement.textContent.split(": ")[1],
-          10
-        );
-        countElement.textContent = `Oma: ${currentCount + 1}`;
+        const currentCount =
+          parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
+        this.countElement.textContent = `Oma: ${currentCount + 1}`;
+        this.countElement.style.display = "inline"; // Ensure the span remains visible
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
       }
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateButtonText() {
-      this.button.textContent = `koop oma (koekjes: ${this.cost})`;
+      this.button.innerHTML = `koop oma (koekjes: ${this.cost})<span id="count-buyAutoClicker">${this.countElement.textContent}</span>`;
     }
 
     upgrade(increase, cost, button, originalText, countElement) {
@@ -99,15 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
         this.totalCps += increase;
         console.log(`Upgrade gekocht: +${increase} cps voor ${cost} koekjes.`);
         const newCost = Math.ceil(cost * 1.2);
-        button.textContent = `${originalText} (${newCost} koekjes)`;
+        button.innerHTML = `${originalText} (${newCost} koekjes)<span id="${countElement.id}">${countElement.textContent}</span>`;
         button.dataset.cost = newCost;
-        const currentCount = parseInt(
-          countElement.textContent.split(": ")[1],
-          10
-        );
+        const currentCount =
+          parseInt(countElement.textContent.split(": ")[1], 10) || 0;
         countElement.textContent = `${originalText.split(" ")[1]}: ${
           currentCount + 1
         }`;
+        countElement.style.display = "inline"; // Ensure the span remains visible
       } else {
         alert("Niet genoeg punten voor deze upgrade!");
       }
@@ -142,13 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
           `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}`
         );
         const newCost = Math.ceil(currentCost * 1.2);
-        this.button.textContent = `Verdubbel Oma's snelheid (${newCost} koekjes)`;
+        this.button.innerHTML = `Verdubbel Oma's snelheid (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
         this.button.dataset.cost = newCost;
-        const currentCount = parseInt(
-          this.countElement.textContent.split(": ")[1],
-          10
-        );
+        const currentCount =
+          parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
         this.countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
+        this.countElement.style.display = "inline"; // Ensure the span remains visible
       } else {
         alert("Niet genoeg koekjes voor deze upgrade!");
       }
@@ -159,12 +157,9 @@ document.addEventListener("DOMContentLoaded", () => {
   new ImageClicker("cookie", 1, game);
 
   const autoClicker = new AutoClicker(game, 0.3, 15, "buyAutoClicker");
-  const countBuyAutoClicker = document.getElementById("count-buyAutoClicker");
   document
     .getElementById("buyAutoClicker")
-    ?.addEventListener("click", () =>
-      autoClicker.purchase(countBuyAutoClicker)
-    );
+    ?.addEventListener("click", () => autoClicker.purchase());
   document
     .getElementById("stopAutoClicker")
     ?.addEventListener("click", () => autoClicker.stop());
