@@ -7,7 +7,7 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
+  height: 50vh;
   width: 300px;
   padding-left: 50px;
 }
@@ -32,7 +32,7 @@ body {
 .store {
   position: absolute;
   left: 66%;
-  top: 105px;
+  top: 30px;
   display: flex;
   flex-direction: column;
   gap: 10px;
