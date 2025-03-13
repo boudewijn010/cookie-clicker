@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
     1000000,
     "upgrade6",
     "count-upgrade6",
-    "koop gordon ramsay"
+    "koop Gordon Ramsay"
   );
 
   const upgradeAutoClickerButton =
