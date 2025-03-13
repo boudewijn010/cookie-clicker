@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   class Game {
     constructor() {
-      this.score = 10000000000; //! wanneer klaar terugzetten naar 0
+      this.score = 10000000000; // later aanpassen naar 0
       this.scoreElement = document.getElementById("score");
       this.updateScore();
     }
@@ -113,6 +113,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  class Upgrade {
+    constructor(
+      game,
+      autoClicker,
+      increase,
+      cost,
+      buttonId,
+      countElementId,
+      text
+    ) {
+      this.game = game;
+      this.autoClicker = autoClicker;
+      this.increase = increase;
+      this.cost = cost;
+      this.button = document.getElementById(buttonId);
+      this.countElement = document.getElementById(countElementId);
+      this.text = text;
+      this.init();
+    }
+
+    init() {
+      if (this.button && this.countElement) {
+        this.button.dataset.cost = this.cost;
+        this.button.addEventListener("click", () => this.applyUpgrade());
+      }
+    }
+
+    applyUpgrade() {
+      const currentCost = parseInt(this.button.dataset.cost, 10);
+      if (this.game.spendPoints(currentCost)) {
+        this.autoClicker.upgrade(
+          this.increase,
+          currentCost,
+          this.button,
+          this.text,
+          this.countElement
+        );
+      } else {
+        alert("Niet genoeg punten voor deze upgrade!");
+      }
+    }
+  }
+
   class EfficiencyUpgrade {
     constructor(game, autoClicker, cost, buttonId, countElementId) {
       this.game = game;
@@ -164,62 +207,60 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("stopAutoClicker")
     ?.addEventListener("click", () => autoClicker.stop());
 
-  const upgrades = [
-    {
-      increase: 100,
-      cost: 5000,
-      text: "koop bakvormpjes",
-      countId: "count-upgrade1",
-    },
-    {
-      increase: 500,
-      cost: 20000,
-      text: "koop extra oven",
-      countId: "count-upgrade2",
-    },
-    {
-      increase: 1000,
-      cost: 50000,
-      text: "koop bakkerij",
-      countId: "count-upgrade3",
-    },
-    {
-      increase: 5000,
-      cost: 100000,
-      text: "koop personeel",
-      countId: "count-upgrade4",
-    },
-    {
-      increase: 10000,
-      cost: 500000,
-      text: "koop fabriek",
-      countId: "count-upgrade5",
-    },
-    {
-      increase: 50000,
-      cost: 1000000,
-      text: "koop gordon ramsay",
-      countId: "count-upgrade6",
-    },
-  ];
-
-  upgrades.forEach((upgrade, index) => {
-    const button = document.getElementById(`upgrade${index + 1}`);
-    const countElement = document.getElementById(upgrade.countId);
-    if (button && countElement) {
-      button.dataset.cost = upgrade.cost;
-      button.addEventListener("click", () => {
-        const currentCost = parseInt(button.dataset.cost, 10);
-        autoClicker.upgrade(
-          upgrade.increase,
-          currentCost,
-          button,
-          upgrade.text,
-          countElement
-        );
-      });
-    }
-  });
+  new Upgrade(
+    game,
+    autoClicker,
+    100,
+    5000,
+    "upgrade1",
+    "count-upgrade1",
+    "koop bakvormpjes"
+  );
+  new Upgrade(
+    game,
+    autoClicker,
+    500,
+    20000,
+    "upgrade2",
+    "count-upgrade2",
+    "koop extra oven"
+  );
+  new Upgrade(
+    game,
+    autoClicker,
+    1000,
+    50000,
+    "upgrade3",
+    "count-upgrade3",
+    "koop bakkerij"
+  );
+  new Upgrade(
+    game,
+    autoClicker,
+    5000,
+    100000,
+    "upgrade4",
+    "count-upgrade4",
+    "koop personeel"
+  );
+  new Upgrade(
+    game,
+    autoClicker,
+    10000,
+    500000,
+    "upgrade5",
+    "count-upgrade5",
+    "koop fabriek"
+  );
+  new Upgrade(
+    game,
+    autoClicker,
+    50000,
+    1000000,
+    "upgrade6",
+    "count-upgrade6",
+    "koop gordon ramsay"
+  );
 
   const upgradeAutoClickerButton =
     document.getElementById("upgradeAutoClicker");
