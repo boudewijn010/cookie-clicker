@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
         this.countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
         this.countElement.textContent = `${this.originalText.split(" ")[1]}: ${
-            currentCount + 1
+          currentCount + 1
         }`;
         this.countElement.style.display = "inline";
       } else {
@@ -292,19 +292,18 @@ document.addEventListener("DOMContentLoaded", () => {
     "count-doubleOma"
   );
   new EfficiencyUpgrade(
-      game,
-      autoClicker,
-      100000,
-      "doubleClick",
-      "count-doubleClick"
+    game,
+    autoClicker,
+    100000,
+    "doubleClick",
+    "count-doubleClick"
   );
   const applyUpgrade = [
     {
-      increase: 2*,
+      increase: 2,
       cost: 10000,
       text: "verdubble oma's snelheid",
       countid: "count-doubleOma",
-    }
-
+    },
   ];
 });
