@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       increase: 2,
       cost: 10000,
-      text: "verdubble oma's snelheid",
+      text: "verdubbel oma's snelheid",
       countid: "count-doubleOma",
     },
   ];
