@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
           `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}`
         );
         const newCost = Math.ceil(currentCost * 2);
-        this.button.innerHTML = `Verdubbel Oma's snelheid (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
+        this.button.innerHTML = `${originalText} (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
         this.button.dataset.cost = newCost;
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
     game,
     autoClicker,
     100,
-      5000,
+    5000,
     "upgrade1",
     "count-upgrade1",
     "koop bakvormpjes"
@@ -299,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     autoClicker,
     100000,
     "doubleClick",
-    "count-doubleClick"
+    "count-doubleClick",
+    "Verdubbel je eigen snelheid"
   );
 });
