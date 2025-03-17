@@ -143,6 +143,11 @@ document.addEventListener("DOMContentLoaded", () => {
     applyUpgrade() {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
+        const currentCount =
+          parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
+        this.countElement.textContent = `${this.text.split(" ")[1]}: ${
+          currentCount + 1
+        }`;
         this.autoClicker.upgrade(
           this.increase,
           currentCost,
@@ -184,14 +189,11 @@ document.addEventListener("DOMContentLoaded", () => {
           `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}`
         );
         const newCost = Math.ceil(currentCost * 1.2);
-        this.button.innerHTML = `${this.originalText} (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
+        this.button.innerHTML = `Verdubbel Oma's snelheid (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
         this.button.dataset.cost = newCost;
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
         this.countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
-        this.countElement.textContent = `${this.originalText.split(" ")[1]}: ${
-          currentCount + 1
-        }`;
         this.countElement.style.display = "inline";
       } else {
         alert("Niet genoeg koekjes voor deze upgrade!");
@@ -298,12 +300,4 @@ document.addEventListener("DOMContentLoaded", () => {
     "doubleClick",
     "count-doubleClick"
   );
-  const applyUpgrade = [
-    {
-      increase: 2,
-      cost: 10000,
-      text: "verdubbel oma's snelheid",
-      countid: "count-doubleOma",
-    },
-  ];
 });
