@@ -156,16 +156,17 @@ document.addEventListener("DOMContentLoaded", () => {
           this.countElement
         );
       } else {
-        alert("Niet genoeg punten voor deze upgrade!");
+        alert("Niet genoeg koekjes voor deze upgrade!");
       }
     }
   }
 
   class EfficiencyUpgrade {
-    constructor(game, autoClicker, cost, buttonId, countElementId) {
+    constructor(game, autoClicker, cost, buttonId, countElementId, text) {
       this.game = game;
       this.autoClicker = autoClicker;
       this.cost = cost;
+      this.text = text;
       this.button = document.getElementById(buttonId);
       this.countElement = document.getElementById(countElementId);
       this.init();
@@ -178,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    applyUpgrade() {
+    applyUpgrade(originalText) {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
         this.autoClicker.cps *= 2;
@@ -216,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
     game,
     autoClicker,
     100,
-    5000,
+      5000,
     "upgrade1",
     "count-upgrade1",
     "koop bakvormpjes"
