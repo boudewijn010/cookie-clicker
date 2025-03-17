@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(
           `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}`
         );
-        const newCost = Math.ceil(currentCost * 1.2);
+        const newCost = Math.ceil(currentCost * 2);
         this.button.innerHTML = `Verdubbel Oma's snelheid (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
         this.button.dataset.cost = newCost;
         const currentCount =
