@@ -96,3 +96,12 @@ button:hover {
 .active-upgrades {
   align-content: center;
 }
+
+.autoclicker-upgrades {
+  position: absolute;
+  left: 33%;
+  top: 41px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
