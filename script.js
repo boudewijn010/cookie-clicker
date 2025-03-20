@@ -144,11 +144,23 @@ document.addEventListener("DOMContentLoaded", () => {
     applyUpgrade() {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
+        // Haal de huidige waarde van de counter op en zorg ervoor dat deze correct wordt geparsed
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
-        this.countElement.textContent = `${this.text.split(" ")[1]}: ${
-          currentCount + 1
-        }`;
+
+        // Verhoog de counter met 1
+        const newCount = currentCount + 1;
+
+        // Update de textContent van de counter
+        this.countElement.textContent = `${
+          this.text.split(" ")[1]
+        }: ${newCount}`;
+
+        // Update de kosten van de upgrade
+        const newCost = Math.ceil(currentCost * 1.2);
+        this.button.dataset.cost = newCost;
+
+        // Voer de upgrade uit
         this.autoClicker.upgrade(
           this.increase,
           currentCost,
