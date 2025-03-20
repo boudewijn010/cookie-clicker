@@ -294,14 +294,15 @@ document.addEventListener("DOMContentLoaded", () => {
     50000,
     "doubleClick",
     "count-doubleClick",
-    "Verdubbel je eigen snelheid"
+    "Verdubbel Click Power"
   );
   new EfficiencyUpgrade(
     game,
     autoClicker,
     100000,
     "doubleOma",
-    "count-doubleOma"
+    "count-doubleOma",
+      "Verdubbel Oma's snelheid"
   );
   new EfficiencyUpgrade(
     game,
