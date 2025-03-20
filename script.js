@@ -193,11 +193,13 @@ document.addEventListener("DOMContentLoaded", () => {
         this.button.innerHTML = `${originalText} (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
         this.button.dataset.cost = newCost;
         const currentCount =
-          parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
-        this.countElement.textContent = `Aantal upgrades: ${currentCount + 1}`;
+            parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
+        this.countElement.textContent = `${originalText.split(" ")[1]}: ${
+            currentCount + 1
+        }`;
         this.countElement.style.display = "inline";
       } else {
-        alert("Niet genoeg koekjes voor deze upgrade!");
+        alert("Niet genoeg punten voor deze upgrade!");
       }
     }
   }
@@ -286,7 +288,14 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
-
+  new EfficiencyUpgrade(
+      game,
+      autoClicker,
+      50000,
+      "doubleClick",
+      "count-doubleClick",
+      "Verdubbel je eigen snelheid"
+  );
   new EfficiencyUpgrade(
     game,
     autoClicker,
@@ -295,11 +304,36 @@ document.addEventListener("DOMContentLoaded", () => {
     "count-doubleOma"
   );
   new EfficiencyUpgrade(
-    game,
-    autoClicker,
-    100000,
-    "doubleClick",
-    "count-doubleClick",
-    "Verdubbel je eigen snelheid"
+      game,
+      autoClicker,
+      100000,
+      "doubleDeeg",
+      "count-doubleDeeg",
+      "verdubble de productie van deeg"
   );
+  new EfficiencyUpgrade(
+      game,
+      autoClicker,
+      100000,
+      "doubleBakvormpjes",
+      "count-doubleBakvormpjes",
+      "verdubble de capasiteit van de bakvormpjes"
+  );
+  new EfficiencyUpgrade(
+      game,
+      AutoClicker,
+      100000,
+      "doubleOven",
+      "count-doubleOven",
+      "verdubble de capasiteit van de ovens"
+  );
+  new EfficiencyUpgrade(
+      game,
+      AutoClicker,
+      10000000,
+      "doubleGordon",
+      "count-doubleGordon",
+      "verdubble Gordon zijn snelheid"
+  );
+
 });
