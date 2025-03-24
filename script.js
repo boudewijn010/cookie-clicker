@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
     init() {
       if (this.button && this.countElement) {
         this.button.dataset.cost = this.cost;
-        this.countElement.textContent = `${this.text.split(" ")[1]}: 0`; // Start de counter op 0
+        this.countElement.textContent = `${this.text.split(" ")[1]}: 0`;
         this.button.addEventListener("click", () => this.applyUpgrade());
       }
     }
@@ -144,23 +144,18 @@ document.addEventListener("DOMContentLoaded", () => {
     applyUpgrade() {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
-        // Haal de huidige waarde van de counter op en zorg ervoor dat deze correct wordt geparsed
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
 
-        // Verhoog de counter met 1
         const newCount = currentCount + 1;
 
-        // Update de textContent van de counter
         this.countElement.textContent = `${
           this.text.split(" ")[1]
         }: ${newCount}`;
 
-        // Update de kosten van de upgrade
         const newCost = Math.ceil(currentCost * 1.2);
         this.button.dataset.cost = newCost;
 
-        // Voer de upgrade uit
         this.autoClicker.upgrade(
           this.increase,
           currentCost,
@@ -188,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     init() {
       if (this.button && this.countElement) {
         this.button.dataset.cost = this.cost;
-        this.countElement.textContent = `${this.text.split(" ")[1]}: 0`; // Start de counter op 0
+        this.countElement.textContent = `${this.text.split(" ")[1]}: 0`;
         this.button.addEventListener("click", () => this.applyUpgrade());
       }
     }
@@ -196,10 +191,8 @@ document.addEventListener("DOMContentLoaded", () => {
     applyUpgrade() {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
-        // Verdubbel de CPS
         this.autoClicker.cps *= 2;
 
-        // Update totalCps met het nieuwe CPS en het aantal upgrades
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
         this.autoClicker.totalCps = this.autoClicker.cps * (currentCount + 1);
@@ -208,12 +201,10 @@ document.addEventListener("DOMContentLoaded", () => {
           `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}, Total CPS: ${this.autoClicker.totalCps}`
         );
 
-        // Bereken de nieuwe kosten en update de knop
         const newCost = Math.ceil(currentCost * 2);
         this.button.innerHTML = `${this.text} (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
         this.button.dataset.cost = newCost;
 
-        // Verhoog de counter en toon deze
         this.countElement.textContent = `${this.text.split(" ")[1]}: ${
           currentCount + 1
         }`;
@@ -308,6 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
+
   new EfficiencyUpgrade(
     game,
     autoClicker,
@@ -327,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
   new EfficiencyUpgrade(
     game,
     autoClicker,
-    100000,
+    250000,
     "doubleDeeg",
     "count-doubleDeeg",
     "verdubble de productie van deeg"
@@ -335,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
   new EfficiencyUpgrade(
     game,
     autoClicker,
-    100000,
+    500000,
     "doubleBakvormpjes",
     "count-doubleBakvormpjes",
     "verdubble de capasiteit van de bakvormpjes"
@@ -343,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
   new EfficiencyUpgrade(
     game,
     AutoClicker,
-    100000,
+    1000000,
     "doubleOven",
     "count-doubleOven",
     "verdubble de capasiteit van de ovens"

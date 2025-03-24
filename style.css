@@ -10,6 +10,8 @@ body {
   height: 50vh;
   width: 300px;
   padding-left: 50px;
+  position: relative;
+  top: 140px;
 }
 
 #cookie img {
@@ -31,11 +33,13 @@ body {
 
 .store {
   position: absolute;
-  left: 66%;
+  left: 73%;
   top: 30px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 670px;
+  overflow-y: auto;
 }
 
 .upgrade-counts {
@@ -100,7 +104,7 @@ button:hover {
 .autoclicker-upgrades {
   position: absolute;
   left: 33%;
-  top: 41px;
+  top: 32px;
   display: flex;
   flex-direction: column;
   gap: 10px;
