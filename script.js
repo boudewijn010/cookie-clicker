@@ -191,15 +191,22 @@ document.addEventListener("DOMContentLoaded", () => {
     applyUpgrade() {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
-        this.autoClicker.cps *= 2;
-
         const currentCount =
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
-        this.autoClicker.totalCps = this.autoClicker.cps * (currentCount + 1);
 
-        console.log(
-          `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}, Total CPS: ${this.autoClicker.totalCps}`
-        );
+        if (this.button.id === "doubleClick") {
+          this.game.addPoints = (points) => {
+            this.game.score += points * 2;
+            this.game.updateScore();
+          };
+          console.log("Click power verdubbeld!");
+        } else {
+          this.autoClicker.cps *= 2;
+          this.autoClicker.totalCps = this.autoClicker.cps * (currentCount + 1);
+          console.log(
+            `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}, Total CPS: ${this.autoClicker.totalCps}`
+          );
+        }
 
         const newCost = Math.ceil(currentCost * 2);
         this.button.innerHTML = `${this.text} (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
