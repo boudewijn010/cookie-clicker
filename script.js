@@ -3,11 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     constructor() {
       this.score = 10000000000; // later aanpassen naar 0
       this.scoreElement = document.getElementById("score");
+      this.extraClickPower = 0; // Houd extra click power bij
       this.updateScore();
     }
 
     addPoints(points) {
-      this.score += points;
+      this.score += points + this.extraClickPower; // Voeg extra click power toe
       this.updateScore();
     }
 
@@ -195,11 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
           parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
 
         if (this.button.id === "doubleClick") {
-          this.game.addPoints = (points) => {
-            this.game.score += points * 2;
-            this.game.updateScore();
-          };
-          console.log("Click power verdubbeld!");
+          // Verhoog de extra click power met 1 per aankoop
+          this.game.extraClickPower += 1;
+          console.log(
+            `Click power verhoogd! Extra koekjes per klik: ${this.game.extraClickPower}`
+          );
         } else {
           this.autoClicker.cps *= 2;
           this.autoClicker.totalCps = this.autoClicker.cps * (currentCount + 1);
