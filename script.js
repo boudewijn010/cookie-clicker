@@ -175,37 +175,56 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   new Clicker("cookie", game, 1);
 
-  new AutoClicker(game, "Oma", 0.3, 15, "buyAutoClicker");
-  new AutoClicker(game, "Fabriek", 5, 500, "buyFactory");
-  new AutoClicker(game, "Bakkerij", 20, 2000, "buyBakery");
+  new AutoClicker(game, "Oma", 2, 15, "buyAutoClicker");
+  new AutoClicker(game, "Beterdeeg", 20, 250, "koopbeterdeeg");
+  new AutoClicker(game, "Bakvormen", 50, 1000, "koopbakvormen");
+  new AutoClicker(game, "oven", 100, 2000, "koopoven");
+  new AutoClicker(game, "Bakkerij", 200, 5000, "koopbakkerij");
+  new AutoClicker(game, "Personeel", 300, 10000, "kooppersoneel");
+  new AutoClicker(game, "Fabriek", 500, 500000, "koopfabriek");
+  new AutoClicker(game, "Gorden", 1000000, 1000000, "koopGorden");
 
-  new Upgrade(
-    game,
-    game.autoClickers["Oma"],
-    100,
-    1000,
-    "upgradeAutoClicker",
-    "Koop beter deeg"
-  );
+  // new Upgrade(
+  //   game,
+  //   game.autoClickers["Oma"],
+  //   100,
+  //   1000,
+  //   "upgradeAutoClicker",
+  //   "verdubble Oma's snelheid"
+  // );
   new EfficiencyUpgrade(
     game,
-    "Oma",
-    50000,
+    "oma",
+    5000,
     "doubleOma",
     "Verdubbel Oma's snelheid"
   );
   new EfficiencyUpgrade(
     game,
-    "Fabriek",
-    100000,
-    "doubleFactory",
-    "Verdubbel de fabriek"
+    "beterdeeg",
+    10000,
+    "doublebeterdeeg",
+    "Verdubbel de productie van deeg"
   );
   new EfficiencyUpgrade(
     game,
-    "Bakkerij",
-    250000,
-    "doubleBakery",
-    "Verdubbel de bakkerij"
+    "bakvormen",
+    25000,
+    "doublebakvormen",
+    "Verdubbel de capasiteit van de bakvormen"
+  );
+  new EfficiencyUpgrade(
+      game,
+      "oven",
+      50000,
+      "doebleoven",
+      "Verdubbel de capasiteit van de oven"
+  );
+  new EfficiencyUpgrade(
+      game,
+      "doubleGorden",
+      10000000,
+      "doubleGorden",
+      "maakt Gorden boos"
   );
 });
