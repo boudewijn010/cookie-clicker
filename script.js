@@ -171,9 +171,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   class EfficiencyUpgrade {
-    constructor(game, autoClicker, cost, buttonId, countElementId, text) {
+    constructor(
+      game,
+      autoClickers,
+      autoClickerIndex,
+      cost,
+      buttonId,
+      countElementId,
+      text
+    ) {
       this.game = game;
-      this.autoClicker = autoClicker;
+      this.autoClickers = autoClickers;
+      this.autoClicker = autoClickers[autoClickerIndex];
       this.cost = cost;
       this.text = text;
       this.button = document.getElementById(buttonId);
