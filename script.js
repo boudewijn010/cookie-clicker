@@ -146,12 +146,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
         const currentCount =
-          parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
+            parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
 
         const newCount = currentCount + 1;
 
         this.countElement.textContent = `${
-          this.text.split(" ")[1]
+            this.text.split(" ")[1]
         }: ${newCount}`;
 
         const newCost = Math.ceil(currentCost * 1.2);
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         this.button.dataset.cost = newCost;
 
         this.countElement.textContent = `${this.text.split(" ")[1]}: ${
-          currentCount + 1
+            currentCount + 1
         }`;
         this.countElement.style.display = "inline";
       } else {
@@ -228,132 +228,132 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const autoClicker = new AutoClicker(game, 0.3, 15, "buyAutoClicker");
   document
-    .getElementById("buyAutoClicker")
-    ?.addEventListener("click", () => autoClicker.purchase());
+      .getElementById("buyAutoClicker")
+      ?.addEventListener("click", () => autoClicker.purchase());
   document
-    .getElementById("stopAutoClicker")
-    ?.addEventListener("click", () => autoClicker.stop());
+      .getElementById("stopAutoClicker")
+      ?.addEventListener("click", () => autoClicker.stop());
 
   new Upgrade(
-    game,
-    autoClicker,
-    100,
-    5000,
-    "upgrade1",
-    "count-upgrade1",
-    "koop bakvormpjes"
+      game,
+      autoClicker,
+      100,
+      5000,
+      "upgrade1",
+      "count-upgrade1",
+      "koop bakvormpjes"
   );
   new Upgrade(
-    game,
-    autoClicker,
-    500,
-    20000,
-    "upgrade2",
-    "count-upgrade2",
-    "koop extra oven"
+      game,
+      autoClicker,
+      500,
+      20000,
+      "upgrade2",
+      "count-upgrade2",
+      "koop extra oven"
   );
   new Upgrade(
-    game,
-    autoClicker,
-    1000,
-    50000,
-    "upgrade3",
-    "count-upgrade3",
-    "koop bakkerij"
+      game,
+      autoClicker,
+      1000,
+      50000,
+      "upgrade3",
+      "count-upgrade3",
+      "koop bakkerij"
   );
   new Upgrade(
-    game,
-    autoClicker,
-    5000,
-    100000,
-    "upgrade4",
-    "count-upgrade4",
-    "koop personeel"
+      game,
+      autoClicker,
+      5000,
+      100000,
+      "upgrade4",
+      "count-upgrade4",
+      "koop personeel"
   );
   new Upgrade(
-    game,
-    autoClicker,
-    10000,
-    500000,
-    "upgrade5",
-    "count-upgrade5",
-    "koop fabriek"
+      game,
+      autoClicker,
+      10000,
+      500000,
+      "upgrade5",
+      "count-upgrade5",
+      "koop fabriek"
   );
   new Upgrade(
-    game,
-    autoClicker,
-    50000,
-    1000000,
-    "upgrade6",
-    "count-upgrade6",
-    "koop Gordon Ramsay"
+      game,
+      autoClicker,
+      50000,
+      1000000,
+      "upgrade6",
+      "count-upgrade6",
+      "koop Gordon Ramsay"
   );
 
   const upgradeAutoClickerButton =
-    document.getElementById("upgradeAutoClicker");
+      document.getElementById("upgradeAutoClicker");
   const countUpgradeAutoClicker = document.getElementById(
-    "count-upgradeAutoClicker"
+      "count-upgradeAutoClicker"
   );
   if (upgradeAutoClickerButton && countUpgradeAutoClicker) {
     upgradeAutoClickerButton.dataset.cost = 1000;
     upgradeAutoClickerButton.addEventListener("click", () => {
       const currentCost = parseInt(upgradeAutoClickerButton.dataset.cost, 10);
       autoClicker.upgrade(
-        100,
-        currentCost,
-        upgradeAutoClickerButton,
-        "koop beter deeg",
-        countUpgradeAutoClicker
+          100,
+          currentCost,
+          upgradeAutoClickerButton,
+          "koop beter deeg",
+          countUpgradeAutoClicker
       );
     });
   }
 
   new EfficiencyUpgrade(
-    game,
-    autoClicker,
-    50000,
-    "doubleClick",
-    "count-doubleClick",
-    "Verdubbel Click Power"
+      game,
+      autoClicker,
+      50000,
+      "doubleClick",
+      "count-doubleClick",
+      "Verdubbel Click Power"
   );
   new EfficiencyUpgrade(
-    game,
-    autoClicker,
-    100000,
-    "doubleOma",
-    "count-doubleOma",
-    "Verdubbel Oma's snelheid"
+      game,
+      autoClicker,
+      100000,
+      "doubleOma",
+      "count-doubleOma",
+      "Verdubbel Oma's snelheid"
   );
   new EfficiencyUpgrade(
-    game,
-    autoClicker,
-    250000,
-    "doubleDeeg",
-    "count-doubleDeeg",
-    "verdubble de productie van deeg"
+      game,
+      autoClicker,
+      250000,
+      "doubleDeeg",
+      "count-doubleDeeg",
+      "verdubble de productie van deeg"
   );
   new EfficiencyUpgrade(
-    game,
-    autoClicker,
-    500000,
-    "doubleBakvormpjes",
-    "count-doubleBakvormpjes",
-    "verdubble de capasiteit van de bakvormpjes"
+      game,
+      autoClicker,
+      500000,
+      "doubleBakvormpjes",
+      "count-doubleBakvormpjes",
+      "verdubble de capasiteit van de bakvormpjes"
   );
   new EfficiencyUpgrade(
-    game,
-    AutoClicker,
-    1000000,
-    "doubleOven",
-    "count-doubleOven",
-    "verdubble de capasiteit van de ovens"
+      game,
+      AutoClicker,
+      1000000,
+      "doubleOven",
+      "count-doubleOven",
+      "verdubble de capasiteit van de ovens"
   );
   new EfficiencyUpgrade(
-    game,
-    AutoClicker,
-    10000000,
-    "doubleGordon",
-    "count-doubleGordon",
-    "verdubble Gordon zijn snelheid"
+      game,
+      AutoClicker,
+      10000000,
+      "doubleGordon",
+      "count-doubleGordon",
+      "verdubble Gordon zijn snelheid"
   );
 });
