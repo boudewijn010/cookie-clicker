@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         this.updateButtonText();
         console.log(`Nieuwe kosten: ${this.cost}`);
         const currentCount =
-            parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
+          parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
         this.countElement.textContent = `Oma: ${currentCount + 1}`;
         this.countElement.style.display = "inline";
       } else {
@@ -102,9 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
         button.innerHTML = `${originalText} (${newCost} koekjes)<span id="${countElement.id}">${countElement.textContent}</span>`;
         button.dataset.cost = newCost;
         const currentCount =
-            parseInt(countElement.textContent.split(": ")[1], 10) || 0;
+          parseInt(countElement.textContent.split(": ")[1], 10) || 0;
         countElement.textContent = `${originalText.split(" ")[1]}: ${
-            currentCount + 1
+          currentCount + 1
         }`;
         countElement.style.display = "inline";
       } else {
@@ -115,13 +115,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   class Upgrade {
     constructor(
-        game,
-        autoClicker,
-        increase,
-        cost,
-        buttonId,
-        countElementId,
-        text
+      game,
+      autoClicker,
+      increase,
+      cost,
+      buttonId,
+      countElementId,
+      text
     ) {
       this.game = game;
       this.autoClicker = autoClicker;
@@ -157,11 +157,11 @@ document.addEventListener("DOMContentLoaded", () => {
         this.button.dataset.cost = newCost;
 
         this.autoClicker.upgrade(
-            this.increase,
-            currentCost,
-            this.button,
-            this.text,
-            this.countElement
+          this.increase,
+          currentCost,
+          this.button,
+          this.text,
+          this.countElement
         );
       } else {
         alert("Niet genoeg koekjes voor deze upgrade!");
@@ -191,15 +191,22 @@ document.addEventListener("DOMContentLoaded", () => {
     applyUpgrade() {
       const currentCost = parseInt(this.button.dataset.cost, 10);
       if (this.game.spendPoints(currentCost)) {
-        this.autoClicker.cps *= 2;
-
         const currentCount =
-            parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
-        this.autoClicker.totalCps = this.autoClicker.cps * (currentCount + 1);
+          parseInt(this.countElement.textContent.split(": ")[1], 10) || 0;
 
-        console.log(
+        if (this.button.id === "doubleClick") {
+          this.game.addPoints = (points) => {
+            this.game.score += points * 2;
+            this.game.updateScore();
+          };
+          console.log("Click power verdubbeld!");
+        } else {
+          this.autoClicker.cps *= 2;
+          this.autoClicker.totalCps = this.autoClicker.cps * (currentCount + 1);
+          console.log(
             `Efficiency upgrade toegepast! Nieuwe CPS: ${this.autoClicker.cps}, Total CPS: ${this.autoClicker.totalCps}`
-        );
+          );
+        }
 
         const newCost = Math.ceil(currentCost * 2);
         this.button.innerHTML = `${this.text} (${newCost} koekjes)<span id="${this.countElement.id}">${this.countElement.textContent}</span>`;
