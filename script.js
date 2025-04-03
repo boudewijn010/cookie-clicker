@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   class Game {
     constructor() {
-      this.score = 1000000;
+      this.score = 1000000000000;
       this.extraClickPower = 0;
       this.scoreElement = document.getElementById("score");
       this.autoClickers = {};
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
       this.cost = cost;
       this.button = document.getElementById(buttonId);
       this.description = description;
-      this.count = 0;
+      this.count = 0; // Counter voor het aantal upgrades
       this.setupButton();
     }
 
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     applyUpgrade() {
       if (this.game.spendPoints(this.cost)) {
-        this.count++;
+        this.count++; // Verhoog de counter
         this.cost = Math.ceil(this.cost * 1.5);
         if (this.game.autoClickers[this.autoClickerName]) {
           this.game.autoClickers[this.autoClickerName].cps *= 2;
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateButtonText() {
-      this.button.innerHTML = `${this.description} (${this.cost} koekjes) <span>${this.count}</span>`;
+      this.button.innerHTML = `${this.description} (${this.cost} koekjes) <span>Aantal: ${this.count}</span>`;
     }
   }
 
@@ -184,47 +184,39 @@ document.addEventListener("DOMContentLoaded", () => {
   new AutoClicker(game, "Fabriek", 500, 500000, "koopfabriek");
   new AutoClicker(game, "Gorden", 1000000, 1000000, "koopGorden");
 
-  // new Upgrade(
-  //   game,
-  //   game.autoClickers["Oma"],
-  //   100,
-  //   1000,
-  //   "upgradeAutoClicker",
-  //   "verdubble Oma's snelheid"
-  // );
   new EfficiencyUpgrade(
     game,
-    "oma",
+    "Oma", // Correcte naam met hoofdletter
     5000,
     "doubleOma",
     "Verdubbel Oma's snelheid"
   );
   new EfficiencyUpgrade(
     game,
-    "beterdeeg",
+    "Beterdeeg", // Correcte naam met hoofdletter
     10000,
     "doublebeterdeeg",
     "Verdubbel de productie van deeg"
   );
   new EfficiencyUpgrade(
     game,
-    "bakvormen",
+    "Bakvormen", // Correcte naam met hoofdletter
     25000,
     "doublebakvormen",
-    "Verdubbel de capasiteit van de bakvormen"
+    "Verdubbel de capaciteit van de bakvormen"
   );
   new EfficiencyUpgrade(
-      game,
-      "oven",
-      50000,
-      "doebleoven",
-      "Verdubbel de capasiteit van de oven"
+    game,
+    "oven", // Correcte naam met kleine letters
+    50000,
+    "doubleoven",
+    "Verdubbel de capaciteit van de oven"
   );
   new EfficiencyUpgrade(
-      game,
-      "doubleGorden",
-      10000000,
-      "doubleGorden",
-      "maakt Gorden boos"
+    game,
+    "Gorden", // Correcte naam met hoofdletter
+    10000000,
+    "doubleGorden",
+    "Maakt Gorden boos"
   );
 });
