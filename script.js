@@ -33,6 +33,48 @@ document.addEventListener("DOMContentLoaded", () => {
     registerAutoClicker(name, autoClicker) {
       this.autoClickers[name] = autoClicker;
     }
+
+    saveGameState() {
+      const gameState = {
+        score: this.score,
+        extraClickPower: this.extraClickPower,
+        autoClickers: Object.keys(this.autoClickers).reduce((acc, key) => {
+          acc[key] = {
+            count: this.autoClickers[key].count,
+            cps: this.autoClickers[key].cps,
+            cost: this.autoClickers[key].cost,
+          };
+          return acc;
+        }, {}),
+        upgrades: Array.from(document.querySelectorAll(".upgrade-button")).map(
+          (button) => ({
+            id: button.id,
+            count: parseInt(button.querySelector("span").textContent) || 0,
+          })
+        ),
+      };
+      localStorage.setItem("cookieClickerGameState", JSON.stringify(gameState));
+    }
+
+    loadGameState() {
+      const gameState = JSON.parse(
+        localStorage.getItem("cookieClickerGameState")
+      );
+      if (gameState) {
+        this.score = gameState.score;
+        this.extraClickPower = gameState.extraClickPower;
+        this.updateScore();
+        for (const key in gameState.autoClickers) {
+          const autoClicker = gameState.autoClickers[key];
+          if (this.autoClickers[key]) {
+            this.autoClickers[key].count = autoClicker.count;
+            this.autoClickers[key].cps = autoClicker.cps;
+            this.autoClickers[key].cost = autoClicker.cost;
+            this.autoClickers[key].updateButtonText();
+          }
+        }
+      }
+    }
   }
 
   class Clicker {
@@ -157,7 +199,9 @@ document.addEventListener("DOMContentLoaded", () => {
         this.count++;
         this.cost = Math.ceil(this.cost * 1.5);
         this.game.extraClickPower += 1;
-        console.log(`Click power increased! Extra cookies per click: ${this.game.extraClickPower}`);
+        console.log(
+          `Click power increased! Extra cookies per click: ${this.game.extraClickPower}`
+        );
         this.updateButtonText();
       } else {
         alert("Not enough points for this upgrade!");
@@ -206,6 +250,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const game = new Game();
+  game.loadGameState();
+
+  window.addEventListener("beforeunload", () => game.saveGameState());
+
   new Clicker("cookie", game, 1);
 
   new AutoClicker(game, "Oma", 2, 15, "buyAutoClicker");
@@ -217,11 +265,41 @@ document.addEventListener("DOMContentLoaded", () => {
   new AutoClicker(game, "Fabriek", 500, 500000, "koopfabriek");
   new AutoClicker(game, "Gorden", 1000000, 1000000, "koopGorden");
 
-  new EfficiencyUpgrade(game, "Oma", 5000, "doubleOma", "Verdubbel Oma's snelheid");
-  new EfficiencyUpgrade(game, "Beterdeeg", 10000, "doublebeterdeeg", "Verdubbel de productie van deeg");
-  new EfficiencyUpgrade(game, "Bakvormen", 25000, "doublebakvormen", "Verdubbel de capaciteit van de bakvormen");
-  new EfficiencyUpgrade(game, "oven", 50000, "doubleoven", "Verdubbel de capaciteit van de oven");
-  new EfficiencyUpgrade(game, "Gorden", 10000000, "doubleGorden", "Maakt Gorden boos");
+  new EfficiencyUpgrade(
+    game,
+    "Oma",
+    5000,
+    "doubleOma",
+    "Verdubbel Oma's snelheid"
+  );
+  new EfficiencyUpgrade(
+    game,
+    "Beterdeeg",
+    10000,
+    "doublebeterdeeg",
+    "Verdubbel de productie van deeg"
+  );
+  new EfficiencyUpgrade(
+    game,
+    "Bakvormen",
+    25000,
+    "doublebakvormen",
+    "Verdubbel de capaciteit van de bakvormen"
+  );
+  new EfficiencyUpgrade(
+    game,
+    "oven",
+    50000,
+    "doubleoven",
+    "Verdubbel de capaciteit van de oven"
+  );
+  new EfficiencyUpgrade(
+    game,
+    "Gorden",
+    10000000,
+    "doubleGorden",
+    "Maakt Gorden boos"
+  );
 
-new DoubleClickUpgrade(game, 50000, "doubleClick", "Double Click Power");
+  new DoubleClickUpgrade(game, 50000, "doubleClick", "Double Click Power");
 });
