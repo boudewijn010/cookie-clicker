@@ -113,3 +113,8 @@ button:hover {
 #title {
   text-align: center;
 }
+
+.save-controls {
+  position: absolute;
+  bottom: 0px;
+}

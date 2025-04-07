@@ -252,6 +252,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   game.loadGameState();
 
+  const saveButton = document.getElementById("saveGame");
+  saveButton.addEventListener("click", () => {
+    game.saveGameState();
+    alert("Game saved!");
+  });
+
+  const deleteButton = document.getElementById("deleteSave");
+  deleteButton.addEventListener("click", () => {
+    localStorage.removeItem("cookieClickerGameState");
+    alert("Save deleted!");
+    location.reload();
+  });
+
   window.addEventListener("beforeunload", () => game.saveGameState());
 
   new Clicker("cookie", game, 1);
