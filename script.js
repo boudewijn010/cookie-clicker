@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ),
       };
       localStorage.setItem("cookieClickerGameState", JSON.stringify(gameState));
+      console.log("Game state saved:", gameState); // Log de opgeslagen gegevens
     }
 
     loadGameState() {
@@ -61,18 +62,34 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.getItem("cookieClickerGameState")
       );
       if (gameState) {
+        // Herstel de score en extra click power
         this.score = gameState.score;
         this.extraClickPower = gameState.extraClickPower;
         this.updateScore();
+
+        // Herstel AutoClickers
         for (const key in gameState.autoClickers) {
-          const autoClicker = gameState.autoClickers[key];
+          const autoClickerData = gameState.autoClickers[key];
           if (this.autoClickers[key]) {
-            this.autoClickers[key].count = autoClicker.count;
-            this.autoClickers[key].cps = autoClicker.cps;
-            this.autoClickers[key].cost = autoClicker.cost;
-            this.autoClickers[key].updateButtonText();
+            const autoClicker = this.autoClickers[key];
+            autoClicker.count = autoClickerData.count;
+            autoClicker.cps = autoClickerData.cps;
+            autoClicker.cost = autoClickerData.cost;
+            autoClicker.updateButtonText();
+            autoClicker.start(); // Start de AutoClicker opnieuw
           }
         }
+
+        // Herstel EfficiencyUpgrades
+        gameState.upgrades.forEach((upgrade) => {
+          const button = document.getElementById(upgrade.id);
+          if (button) {
+            const countSpan = button.querySelector("span");
+            if (countSpan) {
+              countSpan.textContent = upgrade.count;
+            }
+          }
+        });
       }
     }
   }
@@ -96,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
       this.name = name;
       this.cps = cps;
       this.cost = cost;
+      this.initialCost = cost; // Sla de initiële kosten op
       this.count = 0;
       this.interval = null;
       this.button = document.getElementById(buttonId);
@@ -252,18 +270,48 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new Game();
   game.loadGameState();
 
+  // Save Game knop
   const saveButton = document.getElementById("saveGame");
   saveButton.addEventListener("click", () => {
     game.saveGameState();
     alert("Game saved!");
   });
 
+  // Delete Save knop
   const deleteButton = document.getElementById("deleteSave");
   deleteButton.addEventListener("click", () => {
+    // Verwijder de opgeslagen game state uit localStorage
     localStorage.removeItem("cookieClickerGameState");
-    alert("Save deleted!");
-    location.reload();
+
+    // Reset de game state
+    game.score = 0;
+    game.extraClickPower = 0;
+    game.updateScore();
+
+    // Reset AutoClickers
+    for (const key in game.autoClickers) {
+      const autoClicker = game.autoClickers[key];
+      autoClicker.count = 0;
+      autoClicker.cost = autoClicker.initialCost; // Zorg dat je een `initialCost` hebt ingesteld
+      autoClicker.updateButtonText();
+      clearInterval(autoClicker.interval); // Stop eventuele actieve AutoClickers
+      autoClicker.interval = null;
+    }
+
+    // Reset EfficiencyUpgrades
+    document.querySelectorAll(".upgrade-button span").forEach((span) => {
+      span.textContent = "0";
+    });
+
+    alert("Save deleted and game reset!");
+    location.reload(); // Herlaad de pagina om alles opnieuw te initialiseren
   });
+
+  // Automatisch opslaan elke 5 minuten
+  setInterval(() => {
+    game.saveGameState();
+    console.log("Game state automatically saved.");
+  }, 300000); // 300.000 ms = 5 minuten
 
   window.addEventListener("beforeunload", () => game.saveGameState());
 
