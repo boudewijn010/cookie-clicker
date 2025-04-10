@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             count: this.autoClickers[key].count,
             cps: this.autoClickers[key].cps,
             cost: this.autoClickers[key].cost,
+            initialCost: this.autoClickers[key].initialCost,
           };
           return acc;
         }, {}),
@@ -54,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ),
       };
       localStorage.setItem("cookieClickerGameState", JSON.stringify(gameState));
-      console.log("Game state saved:", gameState); // Log de opgeslagen gegevens
+      console.log("Game state saved:", gameState);
+      console.log("AutoClickers opgeslagen:", gameState.autoClickers);
     }
 
     loadGameState() {
@@ -75,10 +77,20 @@ document.addEventListener("DOMContentLoaded", () => {
             autoClicker.count = autoClickerData.count;
             autoClicker.cps = autoClickerData.cps;
             autoClicker.cost = autoClickerData.cost;
+            autoClicker.initialCost = autoClickerData.initialCost; // Herstel initialCost
             autoClicker.updateButtonText();
-            autoClicker.start(); // Start de AutoClicker opnieuw
+
+            // Start de AutoClicker opnieuw als er een count is
+            if (autoClicker.count > 0) {
+              console.log(
+                `AutoClicker ${key} wordt gestart met count: ${autoClicker.count}`
+              );
+              clearInterval(autoClicker.interval); // Zorg dat er geen dubbele intervals zijn
+              autoClicker.start();
+            }
           }
         }
+        console.log("AutoClickers geladen:", gameState.autoClickers);
 
         // Herstel EfficiencyUpgrades
         gameState.upgrades.forEach((upgrade) => {
@@ -113,11 +125,12 @@ document.addEventListener("DOMContentLoaded", () => {
       this.name = name;
       this.cps = cps;
       this.cost = cost;
-      this.initialCost = cost; // Sla de initiële kosten op
+      this.initialCost = cost;
       this.count = 0;
       this.interval = null;
       this.button = document.getElementById(buttonId);
       this.countElement = document.getElementById(`count-${buttonId}`);
+      console.log(`AutoClicker ${name} gekoppeld aan knop:`, this.button);
       this.setupButton();
       game.registerAutoClicker(name, this);
     }
@@ -141,17 +154,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     start() {
-      if (!this.interval) {
-        console.log(`${this.name} AutoClicker gestart!`);
+      if (this.interval) {
+        clearInterval(this.interval); // Voorkom dubbele intervals
+      }
+      if (this.count > 0) {
+        console.log(`${this.name} AutoClicker gestart met interval.`);
         this.interval = setInterval(() => {
-          if (this.count > 0) {
-            console.log(
-              `${this.name} genereert ${
-                this.count * this.cps
-              } koekjes per seconde.`
-            );
-            this.game.addPoints(this.count * this.cps);
-          }
+          console.log(
+            `${this.name} genereert ${
+              this.count * this.cps
+            } koekjes per seconde.`
+          );
+          this.game.addPoints(this.count * this.cps);
         }, 1000);
       }
     }
@@ -268,6 +282,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const game = new Game();
+
+  // Maak eerst alle AutoClickers aan
+  new AutoClicker(game, "Oma", 2, 15, "buyAutoClicker");
+  new AutoClicker(game, "Beterdeeg", 20, 250, "koopbeterdeeg");
+  new AutoClicker(game, "Bakvormen", 50, 1000, "koopbakvormen");
+  new AutoClicker(game, "oven", 100, 2000, "koopoven");
+  new AutoClicker(game, "Bakkerij", 200, 5000, "koopbakkerij");
+  new AutoClicker(game, "Personeel", 300, 10000, "kooppersoneel");
+  new AutoClicker(game, "Fabriek", 500, 500000, "koopfabriek");
+  new AutoClicker(game, "Gorden", 1000000, 1000000, "koopGorden");
+
+  // Laad daarna de opgeslagen game state
   game.loadGameState();
 
   // Save Game knop
@@ -316,15 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("beforeunload", () => game.saveGameState());
 
   new Clicker("cookie", game, 1);
-
-  new AutoClicker(game, "Oma", 2, 15, "buyAutoClicker");
-  new AutoClicker(game, "Beterdeeg", 20, 250, "koopbeterdeeg");
-  new AutoClicker(game, "Bakvormen", 50, 1000, "koopbakvormen");
-  new AutoClicker(game, "oven", 100, 2000, "koopoven");
-  new AutoClicker(game, "Bakkerij", 200, 5000, "koopbakkerij");
-  new AutoClicker(game, "Personeel", 300, 10000, "kooppersoneel");
-  new AutoClicker(game, "Fabriek", 500, 500000, "koopfabriek");
-  new AutoClicker(game, "Gorden", 1000000, 1000000, "koopGorden");
 
   new EfficiencyUpgrade(
     game,
