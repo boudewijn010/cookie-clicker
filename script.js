@@ -1,4 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  function createFallingCookie() {
+    const cookie = document.createElement('div');
+    cookie.className = 'cookie';
+    cookie.style.left = `${Math.random() * 100}vw`;
+    cookie.style.animationDuration = `${Math.random() * 3 + 2}s`;
+    document.getElementById('falling-cookies').appendChild(cookie);
+
+    cookie.addEventListener('animationend', () => {
+      cookie.remove();
+    });
+  }
+
+  setInterval(createFallingCookie, 550);
   class Game {
     constructor() {
       this.score = 1000000000000;
@@ -6,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
       this.scoreElement = document.getElementById("score");
       this.autoClickers = {};
       this.updateScore();
+      this.fallingCookieInterval = setInterval(createFallingCookie, 1000); // Initial interval
+
     }
 
     addPoints(points) {
@@ -45,6 +61,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     handleClick() {
       this.game.addPoints(this.pointsPerClick);
+      this.increaseFallingCookies();
+    }
+
+    increaseFallingCookies() {
+      const originalInterval = 1000;
+      const increasedInterval = 100;
+      const duration = 1000;
+
+      clearInterval(this.game.fallingCookieInterval);
+      this.game.fallingCookieInterval = setInterval(createFallingCookie, increasedInterval);
+
+      setTimeout(() => {
+        clearInterval(this.game.fallingCookieInterval);
+        this.game.fallingCookieInterval = setInterval(createFallingCookie, originalInterval);
+      }, duration);
     }
   }
 
