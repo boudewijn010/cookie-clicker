@@ -4,7 +4,7 @@
   <script src="script.js"></script>
 </head>
 <body>
-<div id="falling-cookies"></div>
+  <div id="falling-cookies"></div>
   <div id="cookie">
     <div id="score">Score: 0</div>
     <img src="img/perfectcookie.webp" />
@@ -48,14 +48,30 @@
 
   <div class="autoclicker-upgrades">
     <h1 id="title">upgrades</h1>
-    <button id="doubleClick">Verdubbel Click Power</button>
-    <button id="doubleOma">Verdubbel Oma's snelheid</button>
-    <button id="doublebeterdeeg">Verdubbel de productie van deeg</button>
-    <button id="doublebakvormen">
-      Verdubbel de capaciteit van de bakvormen
+    <button id="doubleClick">
+      Verdubbel Click Power
+      <span id="count-doubleClick">0</span>
     </button>
-    <button id="doubleoven">Verdubbel de capaciteit van de oven</button>
-    <button id="doubleGorden">Maakt Gorden boos</button>
+    <button id="doubleOma">
+      Verdubbel Oma's snelheid
+      <span id="count-doubleOma">0</span>
+    </button>
+    <button id="doublebeterdeeg">
+      Verdubbel de productie van deeg
+      <span id="count-doublebeterdeeg">0</span>
+    </button>
+    <button id="doublebakvormen">
+      Verdubbel de productie van bakvormen
+      <span id="count-doublebakvormen">0</span>
+    </button>
+    <button id="doubleoven">
+      Verdubbel de capaciteit van de oven
+      <span id="count-doubleoven">0</span>
+    </button>
+    <button id="doubleGorden">
+      Maakt Gorden boos
+      <span id="count-doubleGorden">0</span>
+    </button>
   </div>
 
   <div class="save-controls">

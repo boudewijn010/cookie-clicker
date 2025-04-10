@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
       this.scoreElement = document.getElementById("score");
       this.autoClickers = {};
       this.updateScore();
-      this.fallingCookieInterval = setInterval(createFallingCookie, 1000); // Initial interval
+      this.fallingCookieInterval = setInterval(createFallingCookie, 1000);
     }
 
     addPoints(points) {
@@ -78,12 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.getItem("cookieClickerGameState")
       );
       if (gameState) {
-        // Herstel de score en extra click power
         this.score = gameState.score;
         this.extraClickPower = gameState.extraClickPower;
         this.updateScore();
 
-        // Herstel AutoClickers
         for (const key in gameState.autoClickers) {
           const autoClickerData = gameState.autoClickers[key];
           if (this.autoClickers[key]) {
@@ -91,22 +89,20 @@ document.addEventListener("DOMContentLoaded", () => {
             autoClicker.count = autoClickerData.count;
             autoClicker.cps = autoClickerData.cps;
             autoClicker.cost = autoClickerData.cost;
-            autoClicker.initialCost = autoClickerData.initialCost; // Herstel initialCost
+            autoClicker.initialCost = autoClickerData.initialCost;
             autoClicker.updateButtonText();
 
-            // Start de AutoClicker opnieuw als er een count is
             if (autoClicker.count > 0) {
               console.log(
                 `AutoClicker ${key} wordt gestart met count: ${autoClicker.count}`
               );
-              clearInterval(autoClicker.interval); // Zorg dat er geen dubbele intervals zijn
+              clearInterval(autoClicker.interval);
               autoClicker.start();
             }
           }
         }
         console.log("AutoClickers geladen:", gameState.autoClickers);
 
-        // Herstel EfficiencyUpgrades
         gameState.upgrades.forEach((upgrade) => {
           const button = document.getElementById(upgrade.id);
           if (button) {
@@ -190,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     start() {
       if (this.interval) {
-        clearInterval(this.interval); // Voorkom dubbele intervals
+        clearInterval(this.interval);
       }
       if (this.count > 0) {
         console.log(`${this.name} AutoClicker gestart met interval.`);
@@ -318,7 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const game = new Game();
 
-  // Maak eerst alle AutoClickers aan
   new AutoClicker(game, "Oma", 2, 15, "buyAutoClicker");
   new AutoClicker(game, "Beterdeeg", 20, 250, "koopbeterdeeg");
   new AutoClicker(game, "Bakvormen", 50, 1000, "koopbakvormen");
@@ -328,51 +323,43 @@ document.addEventListener("DOMContentLoaded", () => {
   new AutoClicker(game, "Fabriek", 500, 500000, "koopfabriek");
   new AutoClicker(game, "Gorden", 1000000, 1000000, "koopGorden");
 
-  // Laad daarna de opgeslagen game state
   game.loadGameState();
 
-  // Save Game knop
   const saveButton = document.getElementById("saveGame");
   saveButton.addEventListener("click", () => {
     game.saveGameState();
     alert("Game saved!");
   });
 
-  // Delete Save knop
   const deleteButton = document.getElementById("deleteSave");
   deleteButton.addEventListener("click", () => {
-    // Verwijder de opgeslagen game state uit localStorage
     localStorage.removeItem("cookieClickerGameState");
 
-    // Reset de game state
     game.score = 0;
     game.extraClickPower = 0;
     game.updateScore();
 
-    // Reset AutoClickers
     for (const key in game.autoClickers) {
       const autoClicker = game.autoClickers[key];
       autoClicker.count = 0;
-      autoClicker.cost = autoClicker.initialCost; // Zorg dat je een `initialCost` hebt ingesteld
+      autoClicker.cost = autoClicker.initialCost;
       autoClicker.updateButtonText();
-      clearInterval(autoClicker.interval); // Stop eventuele actieve AutoClickers
+      clearInterval(autoClicker.interval);
       autoClicker.interval = null;
     }
 
-    // Reset EfficiencyUpgrades
     document.querySelectorAll(".upgrade-button span").forEach((span) => {
       span.textContent = "0";
     });
 
     alert("Save deleted and game reset!");
-    location.reload(); // Herlaad de pagina om alles opnieuw te initialiseren
+    location.reload();
   });
 
-  // Automatisch opslaan elke 5 minuten
   setInterval(() => {
     game.saveGameState();
     console.log("Game state automatically saved.");
-  }, 300000); // 300.000 ms = 5 minuten
+  }, 300000);
 
   window.addEventListener("beforeunload", () => game.saveGameState());
 
