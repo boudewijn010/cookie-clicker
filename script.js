@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Gorden",
     10000000,
     "doubleGorden",
-    "Maakt Gorden boos"
+    "Maak Gorden boos"
   );
 
   new DoubleClickUpgrade(game, 50000, "doubleClick", "Double Click Power");
