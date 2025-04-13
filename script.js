@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       this.autoClickers = {};
       this.updateScore();
       this.fallingCookieInterval = setInterval(createFallingCookie, 1000);
+      this.EfficiencyUpgrades = {}; // Gebruik een object in plaats van een array
     }
 
     addPoints(points) {
@@ -48,6 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
       this.autoClickers[name] = autoClicker;
     }
 
+    registerefficiencyUpgrade(name, efficiencyUpgrade) {
+      this.EfficiencyUpgrades[name] = efficiencyUpgrade;
+    }
+
     saveGameState() {
       const gameState = {
         score: this.score,
@@ -67,6 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
             count: parseInt(button.querySelector("span").textContent) || 0,
           })
         ),
+        efficiencyUpgrades: Object.keys(this.EfficiencyUpgrades).map((key) => ({
+          id: key,
+          count: this.EfficiencyUpgrades[key].count,
+        })),
       };
       localStorage.setItem("cookieClickerGameState", JSON.stringify(gameState));
       console.log("Game state saved:", gameState);
@@ -100,6 +109,15 @@ document.addEventListener("DOMContentLoaded", () => {
               autoClicker.start();
             }
           }
+        }
+        if (gameState.efficiencyUpgrades) {
+          gameState.efficiencyUpgrades.forEach((upgrade) => {
+            const efficiencyUpgrade = this.EfficiencyUpgrades[upgrade.id];
+            if (efficiencyUpgrade) {
+              efficiencyUpgrade.count = upgrade.count;
+              efficiencyUpgrade.updateButtonText();
+            }
+          });
         }
         console.log("AutoClickers geladen:", gameState.autoClickers);
 
@@ -177,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (this.game.spendPoints(this.cost)) {
         this.count++;
         this.cost = Math.ceil(this.cost * 1.25);
+        this.button.dataset.cost = this.cost;
         this.updateButtonText();
         this.start();
       } else {
@@ -203,6 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateButtonText() {
       this.button.innerHTML = `Koop ${this.name} (koekjes: ${this.cost}) <span>${this.count}</span>`;
+      this.button.dataset.cost = this.cost;
     }
   }
 
@@ -372,6 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "doubleOma",
     "Verdubbel Oma's snelheid"
   );
+  game.registerefficiencyUpgrade("Oma", new EfficiencyUpgrade());
   new EfficiencyUpgrade(
     game,
     "Beterdeeg",
@@ -379,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "doublebeterdeeg",
     "Verdubbel de productie van deeg"
   );
+  game.registerefficiencyUpgrade("Beterdeeg", new EfficiencyUpgrade());
   new EfficiencyUpgrade(
     game,
     "Bakvormen",
@@ -386,6 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "doublebakvormen",
     "Verdubbel de capaciteit van de bakvormen"
   );
+  game.registerefficiencyUpgrade("Bakvormen", new EfficiencyUpgrade());
   new EfficiencyUpgrade(
     game,
     "oven",
@@ -393,6 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "doubleoven",
     "Verdubbel de capaciteit van de oven"
   );
+  game.registerefficiencyUpgrade("oven", new EfficiencyUpgrade());
   new EfficiencyUpgrade(
     game,
     "Gorden",
@@ -400,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "doubleGorden",
     "Maak Gorden boos"
   );
+  game.registerefficiencyUpgrade("Gorden", new EfficiencyUpgrade());
 
   new DoubleClickUpgrade(game, 50000, "doubleClick", "Double Click Power");
 });
