@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
               clearInterval(autoClicker.interval);
               autoClicker.start();
             }
+
             if (gameState.efficiencyUpgrades) {
               gameState.efficiencyUpgrades.forEach((upgrade) => {
                 const efficiencyUpgrade = this.EfficiencyUpgrades[upgrade.id];
