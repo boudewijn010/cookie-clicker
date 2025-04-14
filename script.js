@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       this.autoClickers = {};
       this.updateScore();
       this.fallingCookieInterval = setInterval(createFallingCookie, 1000);
-      this.EfficiencyUpgrades = {}; // Gebruik een object in plaats van een array
+      this.EfficiencyUpgrades = {};
     }
 
     addPoints(points) {
