@@ -108,6 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
               clearInterval(autoClicker.interval);
               autoClicker.start();
             }
+            if (gameState.efficiencyUpgrades) {
+              gameState.efficiencyUpgrades.forEach((upgrade) => {
+                const efficiencyUpgrade = this.EfficiencyUpgrades[upgrade.id];
+                if (efficiencyUpgrade) {
+                  efficiencyUpgrade.count = upgrade.count;
+                  efficiencyUpgrade.updateButtonText();
+                }
+              });
+            }
           }
         }
         if (gameState.efficiencyUpgrades) {
@@ -226,40 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  class Upgrade {
-    constructor(game, target, increase, cost, buttonId, description) {
-      this.game = game;
-      this.target = target;
-      this.increase = increase;
-      this.cost = cost;
-      this.button = document.getElementById(buttonId);
-      this.description = description;
-      this.count = 0;
-      this.setupButton();
-    }
-
-    setupButton() {
-      if (this.button) {
-        this.button.addEventListener("click", () => this.applyUpgrade());
-        this.updateButtonText();
-      }
-    }
-
-    applyUpgrade() {
-      if (this.game.spendPoints(this.cost)) {
-        this.count++;
-        this.cost = Math.ceil(this.cost * 1.2);
-        this.target.cps += this.increase;
-        this.updateButtonText();
-      } else {
-        alert("Niet genoeg punten voor deze upgrade!");
-      }
-    }
-
-    updateButtonText() {
-      this.button.innerHTML = `${this.description} (${this.cost} koekjes) <span>${this.count}</span>`;
-    }
-  }
   class DoubleClickUpgrade {
     constructor(game, cost, buttonId, description) {
       this.game = game;
